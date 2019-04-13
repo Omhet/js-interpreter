@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Top</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #212121;
+            color: #14ffec;
+            font-family: 'Verdana';
+            font-size: 4rem;
+        }
+        #errorout {
+            color: #FF3D3D;
+        }
+  
+    </style>
+  </head>
+  <body>
+    <div id="output"></div>
+    <div id="errorout"></div>
+    <script>
+      window.addEventListener('message', receiveMessage, false);
+      function receiveMessage({ data }) {
+        try {
+          const value = eval(data);
+          output.innerText = value;
+          errorout.innerText = '';
+        } catch (error) {
+          console.error(error);
+          errorout.innerText = error;
+          output.innerText = '';
+        }
+      }
+    </script>
+  </body>
+</html>
