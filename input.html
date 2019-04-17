@@ -23,19 +23,41 @@
         left: 0;
         font-size: 1.5rem;
       }
+      #drop {
+        height: 100%;
+      }
     </style>
   </head>
+
   <body>
+    <div id="drop">
     <div id="editor">const a = 5;
 const b = 5;
 a + b;
     </div>
+    </div>
+
     <script src="ace.js"></script>
     <script>
       const outputFrame = parent.frames[1];
       const editor = ace.edit('editor');
       editor.setTheme('ace/theme/monokai');
       editor.session.setMode('ace/mode/javascript');
+
+      drop.addEventListener('dragover', (e) => e.preventDefault(), false)
+      drop.addEventListener('drop', handleDrop, false)
+      function handleDrop(e) {
+        e.preventDefault();
+        const dt = e.dataTransfer;
+        const file = dt.files[0];
+
+        const reader = new FileReader();
+        reader.onload = e => {
+          const code = e.target.result;
+          editor.setValue(code);
+        };
+        reader.readAsText(file);
+      }
 
 
       window.onkeyup = ({ ctrlKey, keyCode, target }) => {
